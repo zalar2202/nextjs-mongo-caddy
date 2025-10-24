@@ -1,0 +1,3 @@
+portal.logaa.site, portal.logaa.site {
+    reverse_proxy web:3000
+}

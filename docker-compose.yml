@@ -1,0 +1,42 @@
+services:
+  mongo:
+    image: mongo:7.0-jammy
+    restart: unless-stopped
+    command: ["--bind_ip_all"]
+    env_file: [.env]
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "-u", "${MONGO_INITDB_ROOT_USERNAME}", "-p", "${MONGO_INITDB_ROOT_PASSWORD}", "--eval", "db.adminCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - mongo-data:/data/db
+
+  web:
+    build:
+      context: .
+      target: runner
+    image: app-web
+    env_file: [.env]          # <-- inject .env into the container
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+
+  caddy:
+    image: caddy:2-alpine
+    depends_on: [web]
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  mongo-data:
+  caddy_data:
+  caddy_config:
