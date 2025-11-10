@@ -47,7 +47,7 @@ export default function MobileFrontHeader(props) {
                                     variant="h1"
                                     className="mobile-header-logo-text"
                                 >
-                                    امیدار
+                                    پرسا گستر ویستا
                                 </Typography>
                             </div>
                             <div className="mobile-header-util">
