@@ -86,7 +86,7 @@ export default function MobilePanelHeader(props) {
                                     variant="h1"
                                     className="mobile-header-logo-text"
                                 >
-                                    امیدار
+                                    ویستا
                                 </Typography>
                             </div>
                             <div className="mobile-header-util">
