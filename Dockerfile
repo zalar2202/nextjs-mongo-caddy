@@ -33,6 +33,9 @@ RUN npm run build && test -s .next/BUILD_ID && ls -al .next
 # -------- runner --------
 FROM base AS runner
 ENV NODE_ENV=production
+
+RUN apk add --no-cache curl
+
 COPY --from=deps-prod /app/node_modules ./node_modules
 COPY --from=builder /app/.next ./.next
 COPY public ./public
