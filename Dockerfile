@@ -14,7 +14,16 @@ RUN npm ci --omit=dev
 
 # -------- builder --------
 FROM base AS builder
+
+ARG MONGO_URL
+ARG MONGO_URI
+ARG NEXT_PUBLIC_API_URL
+
+ENV MONGO_URL=$MONGO_URL
+ENV MONGO_URI=${MONGO_URI:-$MONGO_URL}
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NODE_OPTIONS="--max-old-space-size=3072"
+
 COPY --from=deps-build /app/node_modules ./node_modules
 COPY . .
 # ensure a clean prod build
