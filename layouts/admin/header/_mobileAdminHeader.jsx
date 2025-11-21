@@ -315,12 +315,12 @@ export default function MobileAdminHeader(props) {
                                         </Link>
                                     </li>
                                     <li className="menu-item link-item">
-                                        <a href="https://omidarmigrate.com/">
-                                            وبسایت امیدار
+                                        <a href="https://vistauni.com/">
+                                            وبسایت ویستا
                                         </a>
                                     </li>
                                     <li className="menu-item link-item">
-                                        <a href="https://omidarmigrate.com/blog/">
+                                        <a href="https://vistauni.com/blog/">
                                             مجله مهاجرت
                                         </a>
                                     </li>
