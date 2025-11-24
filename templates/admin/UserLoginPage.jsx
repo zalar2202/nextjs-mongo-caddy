@@ -32,15 +32,23 @@ export default function UserLoginPage() {
         setToken(currentToken);
 
         if (token) {
-            const decoded = jwtDecode(token);
+            try {
+                const decoded = jwtDecode(token);
 
-            if (decoded.exp * 1000 < Date.now()) {
+                if (decoded.exp * 1000 < Date.now()) {
+                    Cookies.remove('om_token');
+                    router.replace('/auth/admin/login');
+                    return;
+                }
+
+                if (decoded.type === 'user') {
+                    router.replace('/admin/dashboard');
+                }
+            } catch (error) {
+                // Invalid token - remove it and stay on login page
+                console.error('Invalid token:', error);
                 Cookies.remove('om_token');
-                router.replace('/auth/admin/login');
-            }
-
-            if (decoded.type === 'user') {
-                router.replace('/admin/dashboard');
+                Cookies.remove('refresh_token');
             }
         }
     }, [currentToken, router, token]);

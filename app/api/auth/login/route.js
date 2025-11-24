@@ -3,6 +3,7 @@ export const revalidate = 0;
 import { NextResponse } from 'next/server';
 import dbConnect from '@/utils/dbConnect';
 import { verifyPassword } from '@/utils/verifyPassword';
+import { generateToken, generateRefreshToken } from '@/utils/jwt';
 import Client from '@/models/Client';
 import User from '@/models/User';
 
@@ -50,6 +51,16 @@ export async function POST(req) {
                 );
             }
 
+            if (!user.password) {
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: 'خطا در اطلاعات کاربری.',
+                    },
+                    { status: 500 }
+                );
+            }
+
             if (user.status === 'banned') {
                 return NextResponse.json(
                     {
@@ -60,7 +71,19 @@ export async function POST(req) {
                 );
             }
 
-            const isValid = await verifyPassword(password, user.password);
+            let isValid = false;
+            try {
+                isValid = await verifyPassword(password, user.password);
+            } catch (verifyError) {
+                console.error('Password verification error:', verifyError);
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: 'خطا در بررسی رمز عبور.',
+                    },
+                    { status: 500 }
+                );
+            }
 
             if (!isValid) {
                 return NextResponse.json(
@@ -72,10 +95,25 @@ export async function POST(req) {
                 );
             }
 
+            // Generate new JWT tokens if they don't exist or are invalid
+            let token = user.token;
+            let refreshToken = user.refreshToken;
+
+            // Check if token is a valid JWT (starts with eyJ which is base64 for {" )
+            if (!token || !token.startsWith('eyJ')) {
+                token = generateToken('user');
+                refreshToken = generateRefreshToken('user');
+                
+                // Save tokens to database
+                user.token = token;
+                user.refreshToken = refreshToken;
+                await user.save();
+            }
+
             return NextResponse.json({
                 success: true,
-                token: user.token,
-                refreshToken: user.refreshToken,
+                token: token,
+                refreshToken: refreshToken,
             });
         } else if (type === 'client') {
             const client = await Client.findOne({ username });
@@ -99,7 +137,29 @@ export async function POST(req) {
                 );
             }
 
-            const isValid = await verifyPassword(password, client.password);
+            if (!client.password) {
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: 'خطا در اطلاعات متقاضی.',
+                    },
+                    { status: 500 }
+                );
+            }
+
+            let isValid = false;
+            try {
+                isValid = await verifyPassword(password, client.password);
+            } catch (verifyError) {
+                console.error('Password verification error:', verifyError);
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: 'خطا در بررسی رمز عبور.',
+                    },
+                    { status: 500 }
+                );
+            }
 
             if (!isValid) {
                 return NextResponse.json(
@@ -108,10 +168,25 @@ export async function POST(req) {
                 );
             }
 
+            // Generate new JWT tokens if they don't exist or are invalid
+            let token = client.token;
+            let refreshToken = client.refreshToken;
+
+            // Check if token is a valid JWT (starts with eyJ which is base64 for {" )
+            if (!token || !token.startsWith('eyJ')) {
+                token = generateToken('client');
+                refreshToken = generateRefreshToken('client');
+                
+                // Save tokens to database
+                client.token = token;
+                client.refreshToken = refreshToken;
+                await client.save();
+            }
+
             return NextResponse.json({
                 success: true,
-                token: client.token,
-                refreshToken: client.refreshToken,
+                token: token,
+                refreshToken: refreshToken,
             });
         }
 

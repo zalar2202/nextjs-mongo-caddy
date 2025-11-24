@@ -54,7 +54,7 @@ export default function UserDashboardPage() {
         fetchData();
     }, [dispatch, enqueueSnackbar]);
 
-    if (!stats) {
+    if (!stats || !stats.user || !stats.client || !stats.contract || !stats.document || !stats.visa || !stats.ticket) {
         return <IsLoading isLoading={true} />;
     }
 
@@ -84,7 +84,7 @@ export default function UserDashboardPage() {
                                     همه متقاضیان
                                 </Typography>
                                 <Typography variant="h5">
-                                    {stats.client.numberOfClients}
+                                    {stats.client?.numberOfClients || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -92,7 +92,7 @@ export default function UserDashboardPage() {
                                     متقاضیان فعال
                                 </Typography>
                                 <Typography variant="h5" color="success">
-                                    {stats.client.activeClients}
+                                    {stats.client?.activeClients || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -100,7 +100,7 @@ export default function UserDashboardPage() {
                                     متقاضیان غیر فعال
                                 </Typography>
                                 <Typography variant="h5" color="error">
-                                    {stats.client.inactiveClients}
+                                    {stats.client?.inactiveClients || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -108,7 +108,7 @@ export default function UserDashboardPage() {
                                     متقاضیان مسدود شده
                                 </Typography>
                                 <Typography variant="h5" color="#bbbbbb">
-                                    {stats.client.bannedClients}
+                                    {stats.client?.bannedClients || 0}
                                 </Typography>
                             </div>
                         </div>
@@ -130,7 +130,7 @@ export default function UserDashboardPage() {
                                     همه کاربران
                                 </Typography>
                                 <Typography variant="h5">
-                                    {stats.user.numberOfUsers}
+                                    {stats.user?.numberOfUsers || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -138,7 +138,7 @@ export default function UserDashboardPage() {
                                     کاربران فعال
                                 </Typography>
                                 <Typography variant="h5" color="success">
-                                    {stats.user.activeUsers}
+                                    {stats.user?.activeUsers || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -146,7 +146,7 @@ export default function UserDashboardPage() {
                                     کاربران غیر فعال
                                 </Typography>
                                 <Typography variant="h5" color="error">
-                                    {stats.user.inactiveUsers}
+                                    {stats.user?.inactiveUsers || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -154,7 +154,7 @@ export default function UserDashboardPage() {
                                     کاربران مسدود شده
                                 </Typography>
                                 <Typography variant="h5" color="#bbbbbb">
-                                    {stats.user.bannedUsers}
+                                    {stats.user?.bannedUsers || 0}
                                 </Typography>
                             </div>
                         </div>
@@ -176,13 +176,13 @@ export default function UserDashboardPage() {
                                     همه قرادادها
                                 </Typography>
                                 <Typography variant="h5">
-                                    {stats.contract.numberOfContracts}
+                                    {stats.contract?.numberOfContracts || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
                                 <Typography variant="body2">فعال</Typography>
                                 <Typography variant="h5" color="info">
-                                    {stats.contract.activecontracts}
+                                    {stats.contract?.activecontracts || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -190,7 +190,7 @@ export default function UserDashboardPage() {
                                     در حال اجرا
                                 </Typography>
                                 <Typography variant="h5" color="warning">
-                                    {stats.contract.processingContracts}
+                                    {stats.contract?.processingContracts || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -198,7 +198,7 @@ export default function UserDashboardPage() {
                                     انجام شده
                                 </Typography>
                                 <Typography variant="h5" color="success">
-                                    {stats.contract.completedContracts}
+                                    {stats.contract?.completedContracts || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -206,7 +206,7 @@ export default function UserDashboardPage() {
                                     کنسل شده
                                 </Typography>
                                 <Typography variant="h5" color="#bbbbbb">
-                                    {stats.contract.canceledContracts}
+                                    {stats.contract?.canceledContracts || 0}
                                 </Typography>
                             </div>
                         </div>
@@ -228,7 +228,7 @@ export default function UserDashboardPage() {
                                     همه مدارک
                                 </Typography>
                                 <Typography variant="h5">
-                                    {stats.document.numberOfdocuments}
+                                    {stats.document?.numberOfdocuments || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -236,13 +236,13 @@ export default function UserDashboardPage() {
                                     تایید شده
                                 </Typography>
                                 <Typography variant="h5" color="success">
-                                    {stats.document.approvedDocuments}
+                                    {stats.document?.approvedDocuments || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
                                 <Typography variant="body2">رد شده</Typography>
                                 <Typography variant="h5" color="error">
-                                    {stats.document.rejectedDocuments}
+                                    {stats.document?.rejectedDocuments || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -250,7 +250,7 @@ export default function UserDashboardPage() {
                                     در انتظار متقاضی
                                 </Typography>
                                 <Typography variant="h5" color="warning">
-                                    {stats.document.pendingDocuments}
+                                    {stats.document?.pendingDocuments || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -258,7 +258,7 @@ export default function UserDashboardPage() {
                                     در حال بررسی
                                 </Typography>
                                 <Typography variant="h5" color="info">
-                                    {stats.document.underReviewDocuments}
+                                    {stats.document?.underReviewDocuments || 0}
                                 </Typography>
                             </div>
                         </div>
@@ -280,7 +280,7 @@ export default function UserDashboardPage() {
                                     همه ویزاها
                                 </Typography>
                                 <Typography variant="h5">
-                                    {stats.visa.numberOfvisas}
+                                    {stats.visa?.numberOfvisas || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -288,13 +288,13 @@ export default function UserDashboardPage() {
                                     تایید شده
                                 </Typography>
                                 <Typography variant="h5" color="success">
-                                    {stats.visa.approvedVisas}
+                                    {stats.visa?.approvedVisas || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
                                 <Typography variant="body2">رد شده</Typography>
                                 <Typography variant="h5" color="error">
-                                    {stats.visa.rejectedVisas}
+                                    {stats.visa?.rejectedVisas || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -302,7 +302,7 @@ export default function UserDashboardPage() {
                                     انتظار تایید
                                 </Typography>
                                 <Typography variant="h5" color="warning">
-                                    {stats.visa.pendingVisas}
+                                    {stats.visa?.pendingVisas || 0}
                                 </Typography>
                             </div>
                         </div>
@@ -324,7 +324,7 @@ export default function UserDashboardPage() {
                                     همه تیکت ها
                                 </Typography>
                                 <Typography variant="h5">
-                                    {stats.ticket.numberOftickets}
+                                    {stats.ticket?.numberOftickets || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -332,7 +332,7 @@ export default function UserDashboardPage() {
                                     در انتظار متقاضی
                                 </Typography>
                                 <Typography variant="h5" color="info">
-                                    {stats.ticket.waitingOnClientTickets}
+                                    {stats.ticket?.waitingOnClientTickets || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -340,7 +340,7 @@ export default function UserDashboardPage() {
                                     در انتظار کارشناس
                                 </Typography>
                                 <Typography variant="h5" color="warning">
-                                    {stats.ticket.waitingOnUserTickets}
+                                    {stats.ticket?.waitingOnUserTickets || 0}
                                 </Typography>
                             </div>
                             <div className="panel-dashboard-box-item">
@@ -348,7 +348,7 @@ export default function UserDashboardPage() {
                                     بسته شده
                                 </Typography>
                                 <Typography variant="h5" color="success">
-                                    {stats.ticket.closedTickets}
+                                    {stats.ticket?.closedTickets || 0}
                                 </Typography>
                             </div>
                         </div>
