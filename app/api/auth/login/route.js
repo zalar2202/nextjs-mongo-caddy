@@ -1,6 +1,5 @@
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
-import { connectToDatabase } from '@/lib/mongoose';
 import { NextResponse } from 'next/server';
 import dbConnect from '@/utils/dbConnect';
 import { verifyPassword } from '@/utils/verifyPassword';
@@ -9,15 +8,35 @@ import User from '@/models/User';
 
 //CLIENT | USER LOGIN => "/api/auth/login"
 export async function POST(req) {
-    await dbConnect();
-
     try {
+        await dbConnect();
+
         const { searchParams } = new URL(req.url);
         const type = searchParams.get('type');
+
+        if (!type || (type !== 'user' && type !== 'client')) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: 'نوع کاربری مشخص نشده است.',
+                },
+                { status: 400 }
+            );
+        }
 
         const formData = await req.formData();
         const username = formData.get('username');
         const password = formData.get('password');
+
+        if (!username || !password) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: 'نام کاربری و رمز عبور الزامی است.',
+                },
+                { status: 400 }
+            );
+        }
 
         if (type === 'user') {
             const user = await User.findOne({ username });
@@ -95,9 +114,23 @@ export async function POST(req) {
                 refreshToken: client.refreshToken,
             });
         }
-    } catch (error) {
+
+        // This should never be reached, but just in case
         return NextResponse.json(
-            { success: false, message: error.message },
+            {
+                success: false,
+                message: 'خطای نامشخص',
+            },
+            { status: 400 }
+        );
+    } catch (error) {
+        console.error('Login error:', error);
+        return NextResponse.json(
+            { 
+                success: false, 
+                message: error.message || 'خطای سرور',
+                error: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            },
             { status: 500 }
         );
     }
