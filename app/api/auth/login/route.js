@@ -50,6 +50,16 @@ export async function POST(req) {
                 );
             }
 
+            if (!user.password) {
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: 'خطا در اطلاعات کاربری.',
+                    },
+                    { status: 500 }
+                );
+            }
+
             if (user.status === 'banned') {
                 return NextResponse.json(
                     {
@@ -60,7 +70,19 @@ export async function POST(req) {
                 );
             }
 
-            const isValid = await verifyPassword(password, user.password);
+            let isValid = false;
+            try {
+                isValid = await verifyPassword(password, user.password);
+            } catch (verifyError) {
+                console.error('Password verification error:', verifyError);
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: 'خطا در بررسی رمز عبور.',
+                    },
+                    { status: 500 }
+                );
+            }
 
             if (!isValid) {
                 return NextResponse.json(
@@ -74,8 +96,8 @@ export async function POST(req) {
 
             return NextResponse.json({
                 success: true,
-                token: user.token,
-                refreshToken: user.refreshToken,
+                token: user.token || '',
+                refreshToken: user.refreshToken || '',
             });
         } else if (type === 'client') {
             const client = await Client.findOne({ username });
@@ -99,7 +121,29 @@ export async function POST(req) {
                 );
             }
 
-            const isValid = await verifyPassword(password, client.password);
+            if (!client.password) {
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: 'خطا در اطلاعات متقاضی.',
+                    },
+                    { status: 500 }
+                );
+            }
+
+            let isValid = false;
+            try {
+                isValid = await verifyPassword(password, client.password);
+            } catch (verifyError) {
+                console.error('Password verification error:', verifyError);
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: 'خطا در بررسی رمز عبور.',
+                    },
+                    { status: 500 }
+                );
+            }
 
             if (!isValid) {
                 return NextResponse.json(
@@ -110,8 +154,8 @@ export async function POST(req) {
 
             return NextResponse.json({
                 success: true,
-                token: client.token,
-                refreshToken: client.refreshToken,
+                token: client.token || '',
+                refreshToken: client.refreshToken || '',
             });
         }
 
