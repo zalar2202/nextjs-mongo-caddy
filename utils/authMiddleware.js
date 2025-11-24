@@ -5,10 +5,21 @@ import User from '@/models/User';
 import Client from '@/models/Client';
 
 export async function authMiddleware(req) {
-    const cookieStore = cookies();
-    const tokenObj = cookieStore.get('om_token');
-    const token = tokenObj?.value;
     const secretKey = process.env.JWT_SECRET;
+    let token = null;
+
+    // Try to get token from Authorization header first
+    const authHeader = req.headers.get('authorization');
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+        token = authHeader.substring(7);
+    }
+
+    // Fallback to cookie if not in header
+    if (!token) {
+        const cookieStore = cookies();
+        const tokenObj = cookieStore.get('om_token');
+        token = tokenObj?.value;
+    }
 
     if (!token) {
         return NextResponse.json(
