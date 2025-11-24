@@ -54,7 +54,7 @@ export default function UserDashboardPage() {
         fetchData();
     }, [dispatch, enqueueSnackbar]);
 
-    if (!stats) {
+    if (!stats || !stats.user || !stats.client || !stats.contract || !stats.document || !stats.visa || !stats.ticket) {
         return <IsLoading isLoading={true} />;
     }
 
