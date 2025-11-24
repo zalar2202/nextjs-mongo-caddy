@@ -10,7 +10,7 @@ export default function Logo({ color, width = 60, height = 60 }) {
             }
             width={width}
             height={height}
-            alt="امیدار"
+            alt="ویستا"
             className="logo"
         />
     );

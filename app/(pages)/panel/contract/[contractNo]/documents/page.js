@@ -9,7 +9,7 @@ const ClientContractDocumentsPage = dynamic(
 );
 
 export const metadata = {
-    title: 'امیدار | مدارک و فایلهای قرارداد',
+    title: 'ویستا | مدارک و فایلهای قرارداد',
 };
 
 export default function ClientContractDocuments({ params }) {

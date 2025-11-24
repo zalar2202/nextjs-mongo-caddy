@@ -2,7 +2,7 @@ import ContractManagementPage from '@/templates/admin/ContractManagementPage';
 import { Suspense } from 'react';
 
 export const metadata = {
-    title: 'امیدار | مدیریت قراردادها',
+    title: 'ویستا | مدیریت قراردادها',
 };
 
 export default function ContractManagement() {

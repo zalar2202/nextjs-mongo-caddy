@@ -9,7 +9,7 @@ const ClientContractPickupsPage = dynamic(
 );
 
 export const metadata = {
-    title: 'امیدار | پیکاپ ها',
+    title: 'ویستا | پیکاپ ها',
 };
 
 export default function ContractPickups({ params }) {

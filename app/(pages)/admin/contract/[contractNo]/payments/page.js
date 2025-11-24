@@ -9,7 +9,7 @@ const ContractPaymentsPage = dynamic(
 );
 
 export const metadata = {
-    title: 'امیدار | پرداخت ها',
+    title: 'ویستا | پرداخت ها',
 };
 
 export default function ContractPickups({ params }) {

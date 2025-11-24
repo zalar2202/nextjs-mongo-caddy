@@ -9,7 +9,7 @@ const UserViewTicketPage = dynamic(
 );
 
 export const metadata = {
-    title: 'امیدار | جزییات تیکت',
+    title: 'ویستا | جزییات تیکت',
 };
 
 export default function UserViewTicket({ params }) {

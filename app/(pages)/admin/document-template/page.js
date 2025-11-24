@@ -2,7 +2,7 @@ import DocTemplateManagementPage from '@/templates/admin/DocTemplateManagementPa
 import { Suspense } from 'react';
 
 export const metadata = {
-    title: 'امیدار | نمونه قالب فایل ها',
+    title: 'ویستا | نمونه قالب فایل ها',
 };
 
 export default function DocTemplateManagement() {

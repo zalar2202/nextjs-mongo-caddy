@@ -2,7 +2,7 @@ import ClientNotificationsPage from '@/templates/client/ClientNotificationsPage'
 import { Suspense } from 'react';
 
 export const metadata = {
-    title: 'امیدار | اعلان ها',
+    title: 'ویستا | اعلان ها',
 };
 
 export default function ClientNotifications() {

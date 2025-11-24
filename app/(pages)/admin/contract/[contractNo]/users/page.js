@@ -9,7 +9,7 @@ const ContractUsersPage = dynamic(
 );
 
 export const metadata = {
-    title: 'امیدار | کاربران قرارداد',
+    title: 'ویستا | کاربران قرارداد',
 };
 
 export default function ContractOverview({ params }) {

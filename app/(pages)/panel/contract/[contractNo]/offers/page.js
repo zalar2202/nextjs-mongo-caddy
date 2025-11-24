@@ -9,7 +9,7 @@ const ClientContractOffersPage = dynamic(
 );
 
 export const metadata = {
-    title: 'امیدار | پیشنهادها و آفرها',
+    title: 'ویستا | پیشنهادها و آفرها',
 };
 
 export default function ClientContractOffers({ params }) {

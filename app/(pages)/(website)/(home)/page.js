@@ -2,7 +2,7 @@ import HomePage from '@/templates/HomePage';
 import { Suspense } from 'react';
 
 export const metadata = {
-    title: 'امیدار | پنل مدیریت قرارداد',
+    title: 'ویستا | پنل مدیریت قرارداد',
 };
 
 export default function Home() {

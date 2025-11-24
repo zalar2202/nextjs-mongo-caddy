@@ -2,7 +2,7 @@ import ClientLoginPage from '@/templates/client/ClientLoginPage';
 import { Suspense } from 'react';
 
 export const metadata = {
-    title: 'امیدار | ورود متقاضیان به پرتال',
+    title: 'ویستا | ورود متقاضیان به پرتال',
 };
 
 export default function ClientLogin() {

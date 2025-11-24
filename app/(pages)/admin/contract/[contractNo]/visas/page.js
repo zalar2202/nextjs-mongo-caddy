@@ -9,7 +9,7 @@ const ContractVisasPage = dynamic(
 );
 
 export const metadata = {
-    title: 'امیدار | ویزاها',
+    title: 'ویستا | ویزاها',
 };
 
 export default function ContractVisas({ params }) {

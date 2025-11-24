@@ -9,7 +9,7 @@ const ClientContractHistoryPage = dynamic(
 );
 
 export const metadata = {
-    title: 'امیدار | تاریخچه قرارداد',
+    title: 'ویستا | تاریخچه قرارداد',
 };
 
 export default function ContractHistory({ params }) {

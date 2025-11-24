@@ -2,7 +2,7 @@ import ClientNewTicketPage from '@/templates/client/ClientNewTicketPage';
 import { Suspense } from 'react';
 
 export const metadata = {
-    title: 'امیدار | تیکت جدید',
+    title: 'ویستا | تیکت جدید',
 };
 
 export default function ClientNewTicket() {
