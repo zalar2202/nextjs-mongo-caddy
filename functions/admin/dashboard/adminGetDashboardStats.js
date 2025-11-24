@@ -6,7 +6,8 @@ async function adminGetDashboardStats(dispatch, enqueueSnackbar, setState) {
         const result = await dispatch(ADMIN_GET_DASHBOARD_STATS());
         const response = unwrapResult(result);
 
-        setState(response.data);
+        // response.data is {success: true, data: {...}}, so we need response.data.data
+        setState(response.data?.data || response.data);
     } catch (err) {
         const errorMessage = err.message;
 
