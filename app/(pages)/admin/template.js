@@ -57,7 +57,7 @@ export default function AdminTemplate({ children }) {
         }
     }, [user, pathname, router]);
 
-    return isLoading || user === null ? (
+    return isLoading || user === null || user === false ? (
         <IsLoading isLoading={true} />
     ) : (
         <div className="main">

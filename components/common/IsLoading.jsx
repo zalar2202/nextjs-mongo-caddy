@@ -17,4 +17,5 @@ export default function IsLoading({ isLoading }) {
             </Backdrop>
         );
     }
+    return null;
 }
