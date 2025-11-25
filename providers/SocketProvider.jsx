@@ -6,28 +6,18 @@ import { io } from 'socket.io-client';
 const SocketContext = createContext(null);
 
 export function SocketProvider({ children }) {
-    const [socket, setSocket] = useState(null);
-
-    const dev = process.env.NODE_ENV !== 'production';
-
-    useEffect(() => {
-        let socketInstance;
-        if (dev) {
-            socketInstance = io('http://localhost:7007');
-        } else {
-            // Use current origin in production instead of undefined env variable
-            socketInstance = io();
-        }
-
-        setSocket(socketInstance);
-
-        return () => {
-            socketInstance.disconnect();
-        };
-    }, []);
+    // Temporarily disable socket.io to prevent crashes
+    // Return a mock socket object with no-op methods
+    const mockSocket = {
+        on: () => { },
+        off: () => { },
+        emit: () => { },
+        connected: false,
+        id: null
+    };
 
     return (
-        <SocketContext.Provider value={socket}>
+        <SocketContext.Provider value={mockSocket}>
             {children}
         </SocketContext.Provider>
     );
