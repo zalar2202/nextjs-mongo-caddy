@@ -37,6 +37,8 @@ export default function WebAdminHeader(props) {
     }, [dispatch, doReload, enqueueSnackbar, setDoReload]);
 
     useEffect(() => {
+        if (!socket) return;
+
         socket.on('notification', (data) => {
             if (data.receiver.includes(user._id)) {
                 setDoReload(true);
