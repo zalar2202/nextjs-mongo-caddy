@@ -59,11 +59,18 @@ export default function MobileAdminHeader(props) {
     useEffect(() => {
         if (!socket) return;
 
-        socket.on('notification', (data) => {
+        const handleNotification = (data) => {
             if (data.receiver.includes(user._id)) {
                 setDoReload(true);
             }
-        });
+        };
+
+        socket.on('notification', handleNotification);
+
+        return () => {
+            if (!socket) return;
+            socket.off('notification', handleNotification);
+        };
     }, [user, socket]);
 
     const path = usePathname();

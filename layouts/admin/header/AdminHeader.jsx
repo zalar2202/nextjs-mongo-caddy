@@ -74,8 +74,10 @@ export default function AdminHeader({ user }) {
         });
 
         return () => {
+            if (!socket) return;
             socket.off('connect', onConnect);
             socket.off('disconnect', onDisconnect);
+            socket.off('notification');
         };
     }, [enqueueSnackbar, socket, user]);
 
