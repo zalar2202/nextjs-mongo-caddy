@@ -15,7 +15,8 @@ export function SocketProvider({ children }) {
         if (dev) {
             socketInstance = io('http://localhost:7007');
         } else {
-            socketInstance = io(process.env.NEXT_PUBLIC_LIVE_URL);
+            // Use current origin in production instead of undefined env variable
+            socketInstance = io();
         }
 
         setSocket(socketInstance);
