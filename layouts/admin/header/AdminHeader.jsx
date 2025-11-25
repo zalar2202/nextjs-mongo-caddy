@@ -49,6 +49,8 @@ export default function AdminHeader({ user }) {
     }, [isDarkMode]);
 
     useEffect(() => {
+        if (!socket) return;
+
         if (socket.connected) {
             onConnect();
         }
