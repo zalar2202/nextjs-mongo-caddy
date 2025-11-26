@@ -14,7 +14,8 @@ export default function PanelHeader({ client }) {
 
     const { dispatch, enqueueSnackbar, router } = useCommonHooks();
 
-    const socket = useSocket();
+    const socketContext = useSocket();
+    const socket = socketContext?.socket;
 
     const handleLogout = async () => {
         await clientLogout(enqueueSnackbar, router);
@@ -49,6 +50,8 @@ export default function PanelHeader({ client }) {
     }, [isDarkMode]);
 
     useEffect(() => {
+        if (!socket) return;
+
         if (socket.connected) {
             onConnect();
         }
@@ -73,6 +76,7 @@ export default function PanelHeader({ client }) {
         });
 
         return () => {
+            if (!socket) return;
             socket.off('connect', onConnect);
             socket.off('disconnect', onDisconnect);
         };

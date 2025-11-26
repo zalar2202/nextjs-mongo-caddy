@@ -8,37 +8,11 @@ type SocketCtx = { socket: Socket | null; connected: boolean };
 const SocketContext = createContext<SocketCtx>({ socket: null, connected: false });
 
 export function SocketProvider({ children }: { children: React.ReactNode }) {
-  const socketRef = useRef<Socket | null>(null);
-  const [connected, setConnected] = useState(false);
+  console.log('🔥 SOCKET PROVIDER VERSION: 2024-11-26-15:04 - SOCKET DISABLED (NULL) 🔥');
 
-  const value = useMemo<SocketCtx>(() => ({ socket: socketRef.current, connected }), [connected]);
-
-  useEffect(() => {
-    // IMPORTANT: must match server & nginx
-    const s = io("/", {
-      path: "/socket.io",
-      transports: ["websocket", "polling"],
-      withCredentials: true,
-    });
-
-    socketRef.current = s;
-    const onConnect = () => setConnected(true);
-    const onDisconnect = () => setConnected(false);
-
-    s.on("connect", onConnect);
-    s.on("disconnect", onDisconnect);
-    s.on("hello", (msg) => {
-      // handy to prove the channel is alive
-      // console.log("hello:", msg);
-    });
-
-    return () => {
-      s.off("connect", onConnect);
-      s.off("disconnect", onDisconnect);
-      s.close();
-      socketRef.current = null;
-    };
-  }, []);
+  // Temporarily disable socket.io to prevent crashes
+  // Return null socket to skip all socket-related code
+  const value = useMemo<SocketCtx>(() => ({ socket: null, connected: false }), []);
 
   return <SocketContext.Provider value={value}>{children}</SocketContext.Provider>;
 }

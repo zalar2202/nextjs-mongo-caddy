@@ -14,7 +14,8 @@ export default function AdminHeader({ user }) {
 
     const { dispatch, enqueueSnackbar, router } = useCommonHooks();
 
-    const socket = useSocket();
+    const socketContext = useSocket();
+    const socket = socketContext?.socket;
 
     const handleLogout = async () => {
         await userLogout(enqueueSnackbar, router);

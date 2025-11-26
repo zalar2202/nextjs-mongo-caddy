@@ -6,19 +6,11 @@ import { io } from 'socket.io-client';
 const SocketContext = createContext(null);
 
 export function SocketProvider({ children }) {
-    console.log('🔥 SOCKET PROVIDER VERSION: 2024-11-26-00:12 - MOCK SOCKET ENABLED 🔥');
+    console.log('🔥 SOCKET PROVIDER VERSION: 2024-11-26-14:55 - SOCKET DISABLED (NULL) 🔥');
     // Temporarily disable socket.io to prevent crashes
-    // Return a mock socket object with no-op methods
-    const mockSocket = {
-        on: () => { },
-        off: () => { },
-        emit: () => { },
-        connected: false,
-        id: null
-    };
-
+    // Return null so all socket checks will skip execution
     return (
-        <SocketContext.Provider value={mockSocket}>
+        <SocketContext.Provider value={null}>
             {children}
         </SocketContext.Provider>
     );
